@@ -1,0 +1,39 @@
+plugins{
+    id 'application'
+    id 'java'
+    id 'idea'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+group 'org.csw'
+version '0.1'
+repositories {
+    mavenCentral()
+}
+test {
+    useJUnitPlatform()
+}
+
+javafx {
+    version = "14.0.2"
+    modules = [ 'javafx.controls', 'javafx.fxml','javafx.media','javafx.web' ]
+}
+dependencies {
+    implementation 'org.json:json:20171018'
+    implementation 'org.slf4j:slf4j-simple:1.7.30'
+    implementation 'tech.tablesaw:tablesaw-core:0.38.1'
+    implementation 'tech.tablesaw:tablesaw-jsplot:0.38.1'
+    //testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+
+}
+application {
+    getMainClass().set("Runner")
+}
+jar {
+    manifest {
+        attributes "Main-Class": "Runner"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
